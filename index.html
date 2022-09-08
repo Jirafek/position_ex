@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <script rel="preload">async function fetchWithTimeout(ms, promise) {
+      return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+          reject(new Error('TIMEOUT'));
+        }, ms);
+
+        promise
+          .then((value) => {
+            clearTimeout(timer);
+            resolve(value);
+          })
+          .catch((reason) => {
+            clearTimeout(timer);
+            reject(reason);
+          });
+      });
+    }
+
+    async function checkAvailableNode(url) {
+      try {
+        const response = await fetchWithTimeout(
+          1000,
+          fetch(url, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json', accept: 'application/json' },
+            body: JSON.stringify({
+              id: 1,
+              jsonrpc: '2.0',
+              method: 'eth_blockNumber',
+              params: [],
+            }),
+          }).then((res) => res.json()),
+        );
+
+        if (response?.result) {
+          if (!window.blockNumber) {
+            window.blockNumber = response?.result;
+          }
+          return true;
+        } else {
+          return false;
+        }
+      } catch (e) {
+        return false;
+      }
+    }
+
+    const getInstanceNode = async () => {
+      try {
+        const listNode = [`https://rpc.ankr.com/bsc/206242aedbcf68f4c731e89f2988a434fb7e46560bee0ba90e4a2370b5ec71a9`, `https://bsc-dataseed1.ninicoin.io`, `https://bsc-dataseed1.defibit.io`];
+        for (const node of listNode) {
+          const result = await checkAvailableNode(node);
+          if (result) {
+            window.nodeValid = node;
+            break;
+          }
+        }
+        if (!window.nodeValid) {
+          window.nodeValid = listNode[0];
+        }
+      } catch (e) { }
+    };
+    getInstanceNode();</script>
+  <meta charset="utf-8" />
+  <link rel="icon" href="https://position.exchange/favicon.ico?v=2" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description"
+    content="Position Exchange is the new community driven decentralized trading platform powered by the POSI token. Trade, Swap, Farm, Stake & Earn in an attractive and user-friendly platform." />
+  <meta name="facebook-domain-verification" content="nvl6il2so6bl4vz0z1bt0ai9ivxrvj" />
+  <link rel="preconnect"
+    href="https://rpc.ankr.com/bsc/206242aedbcf68f4c731e89f2988a434fb7e46560bee0ba90e4a2370b5ec71a9" />
+  <link rel="preconnect" href="https://bsc-dataseed1.defibit.io" />
+  <link rel="preconnect" href="https://bsc-dataseed1.ninicoin.io" />
+  <link rel="preconnect" href="https://raw.githubusercontent.com" />
+  <link rel="preconnect" href="https://cryptologos.cc" />
+  <meta name="cf-2fa-verify" content="64700c7fe0daea8">
+  <link rel="apple-touch-icon" href="/logo192.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <meta name="robots" content="index,follow" />
+  <title>Position Exchange</title>
+  <style>
+    @font-face {
+      font-family: Ariom;
+      src: url(/fonts/Ariom-Bold.ttf) format('truetype'), url('/fonts/Ariom BoldItalic.ttf') format('truetype'), url('/fonts/Ariom RegularItalic.ttf') format('truetype'), url('/fonts/Ariom UltraBold.ttf') format('truetype'), url('/fonts/Ariom UltraBoldItalic.ttf') format('truetype')
+    }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NGN4VYB00X"></script>
+  <script>function gtag() { dataLayer.push(arguments) } window.dataLayer = window.dataLayer || [], gtag("js", new Date), gtag("config", "G-NGN4VYB00X")</script>
+  <script>!function (e, t, n, c, o, a, f) { e.fbq || (o = e.fbq = function () { o.callMethod ? o.callMethod.apply(o, arguments) : o.queue.push(arguments) }, e._fbq || (e._fbq = o), o.push = o, o.loaded = !0, o.version = "2.0", o.queue = [], (a = t.createElement(n)).async = !0, a.src = "https://connect.facebook.net/en_US/fbevents.js", (f = t.getElementsByTagName(n)[0]).parentNode.insertBefore(a, f)) }(window, document, "script"), fbq("init", "587349042380753"), fbq("track", "PageView")</script>
+  <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=587349042380753&ev=PageView&noscript=1" /></noscript>
+  <link href="/static/css/20.1680cc35.chunk.css" rel="stylesheet">
+  <link href="/static/css/main.f99ec5d2.chunk.css" rel="stylesheet">
+</head>
+
+<body><noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <div id="root2"></div>
+  <div id="root3"></div>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+  <script>!function (e) { function c(c) { for (var r, a, d = c[0], o = c[1], u = c[2], i = 0, l = []; i < d.length; i++)a = d[i], Object.prototype.hasOwnProperty.call(f, a) && f[a] && l.push(f[a][0]), f[a] = 0; for (r in o) Object.prototype.hasOwnProperty.call(o, r) && (e[r] = o[r]); for (b && b(c); l.length;)l.shift()(); return n.push.apply(n, u || []), t() } function t() { for (var e, c = 0; c < n.length; c++) { for (var t = n[c], r = !0, a = 1; a < t.length; a++) { var o = t[a]; 0 !== f[o] && (r = !1) } r && (n.splice(c--, 1), e = d(d.s = t[0])) } return e } var r = {}, a = { 19: 0 }, f = { 19: 0 }, n = []; function d(c) { if (r[c]) return r[c].exports; var t = r[c] = { i: c, l: !1, exports: {} }; return e[c].call(t.exports, t, t.exports, d), t.l = !0, t.exports } d.e = function (e) { var c = []; a[e] ? c.push(a[e]) : 0 !== a[e] && { 1: 1, 2: 1, 5: 1, 23: 1, 26: 1, 27: 1, 28: 1, 29: 1, 30: 1, 31: 1, 32: 1, 33: 1, 36: 1, 37: 1, 56: 1 }[e] && c.push(a[e] = new Promise((function (c, t) { for (var r = "static/css/" + ({}[e] || e) + "." + { 0: "31d6cfe0", 1: "a825aa55", 2: "0d5310cb", 3: "31d6cfe0", 4: "31d6cfe0", 5: "cee64ba0", 6: "31d6cfe0", 7: "31d6cfe0", 8: "31d6cfe0", 9: "31d6cfe0", 10: "31d6cfe0", 11: "31d6cfe0", 12: "31d6cfe0", 13: "31d6cfe0", 14: "31d6cfe0", 15: "31d6cfe0", 16: "31d6cfe0", 17: "31d6cfe0", 21: "31d6cfe0", 22: "31d6cfe0", 23: "c28dcd2f", 24: "31d6cfe0", 25: "31d6cfe0", 26: "5c5c7bab", 27: "56c2300f", 28: "5c5c7bab", 29: "5c5c7bab", 30: "5c5c7bab", 31: "5c5c7bab", 32: "5c5c7bab", 33: "38733773", 34: "31d6cfe0", 35: "31d6cfe0", 36: "a825aa55", 37: "a825aa55", 38: "31d6cfe0", 39: "31d6cfe0", 40: "31d6cfe0", 41: "31d6cfe0", 42: "31d6cfe0", 43: "31d6cfe0", 44: "31d6cfe0", 45: "31d6cfe0", 46: "31d6cfe0", 47: "31d6cfe0", 48: "31d6cfe0", 49: "31d6cfe0", 50: "31d6cfe0", 51: "31d6cfe0", 52: "31d6cfe0", 53: "31d6cfe0", 54: "31d6cfe0", 55: "31d6cfe0", 56: "a825aa55", 57: "31d6cfe0", 58: "31d6cfe0", 59: "31d6cfe0", 60: "31d6cfe0", 61: "31d6cfe0", 62: "31d6cfe0", 63: "31d6cfe0", 64: "31d6cfe0", 65: "31d6cfe0", 66: "31d6cfe0", 67: "31d6cfe0", 68: "31d6cfe0", 69: "31d6cfe0", 70: "31d6cfe0", 71: "31d6cfe0", 72: "31d6cfe0" }[e] + ".chunk.css", f = d.p + r, n = document.getElementsByTagName("link"), o = 0; o < n.length; o++) { var u = (b = n[o]).getAttribute("data-href") || b.getAttribute("href"); if ("stylesheet" === b.rel && (u === r || u === f)) return c() } var i = document.getElementsByTagName("style"); for (o = 0; o < i.length; o++) { var b; if ((u = (b = i[o]).getAttribute("data-href")) === r || u === f) return c() } var l = document.createElement("link"); l.rel = "stylesheet", l.type = "text/css", l.onload = c, l.onerror = function (c) { var r = c && c.target && c.target.src || f, n = new Error("Loading CSS chunk " + e + " failed.\n(" + r + ")"); n.code = "CSS_CHUNK_LOAD_FAILED", n.request = r, delete a[e], l.parentNode.removeChild(l), t(n) }, l.href = f, document.getElementsByTagName("head")[0].appendChild(l) })).then((function () { a[e] = 0 }))); var t = f[e]; if (0 !== t) if (t) c.push(t[2]); else { var r = new Promise((function (c, r) { t = f[e] = [c, r] })); c.push(t[2] = r); var n, o = document.createElement("script"); o.charset = "utf-8", o.timeout = 120, d.nc && o.setAttribute("nonce", d.nc), o.src = function (e) { return d.p + "static/js/" + ({}[e] || e) + "." + { 0: "50df728a", 1: "df068891", 2: "4ca4a4e9", 3: "d23db2a3", 4: "acb4eb88", 5: "7e8271c7", 6: "12eb52fe", 7: "5eae7b44", 8: "04126dea", 9: "5a7fa60d", 10: "555746da", 11: "b261e334", 12: "3f310f91", 13: "f7109ac7", 14: "5eaa3809", 15: "7f883517", 16: "6277411b", 17: "ab619415", 21: "c14d33a6", 22: "67a99cac", 23: "7d842723", 24: "4ae54f95", 25: "7e975306", 26: "f803cdef", 27: "0c92e753", 28: "aa7f68ab", 29: "887a7d5e", 30: "4678f443", 31: "c26eac15", 32: "3935f0b4", 33: "0c7148e0", 34: "9c931c8e", 35: "06ed3582", 36: "6e5a4f01", 37: "7641ab0e", 38: "73262771", 39: "94b54f83", 40: "0ce1e063", 41: "90c08cdb", 42: "f4051aad", 43: "6803f040", 44: "1916dbe0", 45: "d1ff3808", 46: "12bb8005", 47: "0f273cfb", 48: "d8dbdf53", 49: "34c2644d", 50: "ffcf3c93", 51: "adab230b", 52: "43834b39", 53: "045f786d", 54: "5d3c2c76", 55: "0950b185", 56: "3bbf5a06", 57: "1579facc", 58: "6175592a", 59: "41b3bbab", 60: "17a66c0b", 61: "e4c429a9", 62: "a50a65db", 63: "9a9538c4", 64: "c3636c37", 65: "dab6daf8", 66: "fcd6306b", 67: "0b71943d", 68: "68bac53e", 69: "5699911a", 70: "c7ced0e4", 71: "e020ec67", 72: "613f3fe0" }[e] + ".chunk.js" }(e); var u = new Error; n = function (c) { o.onerror = o.onload = null, clearTimeout(i); var t = f[e]; if (0 !== t) { if (t) { var r = c && ("load" === c.type ? "missing" : c.type), a = c && c.target && c.target.src; u.message = "Loading chunk " + e + " failed.\n(" + r + ": " + a + ")", u.name = "ChunkLoadError", u.type = r, u.request = a, t[1](u) } f[e] = void 0 } }; var i = setTimeout((function () { n({ type: "timeout", target: o }) }), 12e4); o.onerror = o.onload = n, document.head.appendChild(o) } return Promise.all(c) }, d.m = e, d.c = r, d.d = function (e, c, t) { d.o(e, c) || Object.defineProperty(e, c, { enumerable: !0, get: t }) }, d.r = function (e) { "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 }) }, d.t = function (e, c) { if (1 & c && (e = d(e)), 8 & c) return e; if (4 & c && "object" == typeof e && e && e.__esModule) return e; var t = Object.create(null); if (d.r(t), Object.defineProperty(t, "default", { enumerable: !0, value: e }), 2 & c && "string" != typeof e) for (var r in e) d.d(t, r, function (c) { return e[c] }.bind(null, r)); return t }, d.n = function (e) { var c = e && e.__esModule ? function () { return e.default } : function () { return e }; return d.d(c, "a", c), c }, d.o = function (e, c) { return Object.prototype.hasOwnProperty.call(e, c) }, d.p = "/", d.oe = function (e) { throw console.error(e), e }; var o = this.webpackJsonpposition_web_app = this.webpackJsonpposition_web_app || [], u = o.push.bind(o); o.push = c, o = o.slice(); for (var i = 0; i < o.length; i++)c(o[i]); var b = u; t() }([])</script>
+  <script src="/static/js/20.463e9f9e.chunk.js"></script>
+  <script src="/static/js/main.9d471939.chunk.js"></script>
+</body>
+
+</html>
